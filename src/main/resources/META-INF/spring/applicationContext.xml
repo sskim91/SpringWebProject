@@ -23,5 +23,5 @@
 
     <!---->
     <context:component-scan base-package="sskim.dao"/>
-
+    <context:component-scan base-package="sskim.service"/>
 </beans>
