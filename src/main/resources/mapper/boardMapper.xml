@@ -10,7 +10,13 @@
     </insert>
 
     <select id="read" resultType="sskim.domain.BoardVO">
-        SELECT bno, title, content, writer, regdate, viewcnt
+        SELECT
+            bno,
+            title,
+            content,
+            writer,
+            regdate,
+            viewcnt
         FROM sskim_board
         WHERE bno = #{bno}
     </select>
@@ -26,10 +32,32 @@
 
     <select id="listAll" resultType="sskim.domain.BoardVO">
         <![CDATA[
-          SELECT bno, title, content, writer, regdate, viewcnt
-          FROM sskim_board
-          WHERE bno > 0
-          ORDER BY bno DESC , regdate DESC
+        SELECT
+            bno,
+            title,
+            content,
+            writer,
+            regdate,
+            viewcnt
+        FROM sskim_board
+        WHERE bno > 0
+        ORDER BY bno DESC, regdate DESC
+        ]]>
+    </select>
+
+    <select id="listPage" resultType="BoardVO">
+        <![CDATA[
+        SELECT
+            bno,
+            title,
+            content,
+            writer,
+            regdate,
+            viewcnt
+        FROM sskim_board
+        WHERE bno > 0
+        ORDER BY bno DESC, regdate DESC
+        LIMIT #{page}, 10
         ]]>
     </select>
 </mapper>

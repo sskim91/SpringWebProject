@@ -8,6 +8,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import sskim.dao.BoardDAO;
 import sskim.domain.BoardVO;
 
+import java.util.List;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"file:src/main/resources/META-INF/spring/applicationContext.xml"})
 public class BoardDAOTest {
@@ -43,5 +45,16 @@ public class BoardDAOTest {
     @Test
     public void testDelete() throws Exception{
         dao.delete(1);
+    }
+
+    //페이징 처리 SQL 테스트
+    @Test
+    public void testListPage() throws Exception {
+        int page = 3;
+        List<BoardVO> list = dao.listPage(page);
+
+        for (BoardVO boardVO : list) {
+            logger.info(boardVO.getBno() + " : " + boardVO.getTitle());
+        }
     }
 }
