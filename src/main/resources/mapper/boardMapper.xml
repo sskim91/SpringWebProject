@@ -22,12 +22,14 @@
     </select>
 
     <update id="update">
-        UPDATE sskim_board set title = #{title}, content = #{content}
+        UPDATE sskim_board
+        SET title = #{title}, content = #{content}
         WHERE bno = #{bno}
     </update>
 
     <delete id="delete">
-        DELETE FROM sskim_board WHERE bno = #{bno}
+        DELETE FROM sskim_board
+        WHERE bno = #{bno}
     </delete>
 
     <select id="listAll" resultType="sskim.domain.BoardVO">
@@ -60,4 +62,28 @@
         LIMIT #{page}, 10
         ]]>
     </select>
-</mapper>
+
+    <select id="listCriteria" resultType="BoardVO">
+        <![CDATA[
+        SELECT
+            bno,
+            title,
+            content,
+            writer,
+            regdate,
+            viewcnt
+        FROM sskim_board
+        WHERE bno > 0
+        ORDER BY bno DESC, regdate DESC
+        LIMIT #{pageStart}, #{perPageNum}
+        ]]>
+    </select>
+
+    <select id="countPaging" resultType="int">
+        <![CDATA[
+        SELECT count(bno)
+        FROM sskim_board
+        WHERE bno > 0
+        ]]>
+        </select>
+        </mapper>

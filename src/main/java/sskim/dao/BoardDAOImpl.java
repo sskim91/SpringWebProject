@@ -4,6 +4,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import sskim.domain.BoardVO;
+import sskim.domain.Criteria;
 
 import java.util.List;
 
@@ -47,5 +48,15 @@ public class BoardDAOImpl implements BoardDAO {
         }
         page = (page -1) * 10;
         return session.selectList(namespace+".listPage", page);
+    }
+
+    @Override
+    public List<BoardVO> listCriteria(Criteria cri) throws Exception {
+        return session.selectList(namespace + ".listCriteria", cri);
+    }
+
+    @Override
+    public int countPaging(Criteria cri) throws Exception {
+        return session.selectOne(namespace + ".countPaging", cri);
     }
 }

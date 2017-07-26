@@ -1,6 +1,7 @@
 package sskim.dao;
 
 import sskim.domain.BoardVO;
+import sskim.domain.Criteria;
 
 import java.util.List;
 
@@ -16,4 +17,8 @@ public interface BoardDAO {
     public List<BoardVO> listAll() throws Exception;
 
     public List<BoardVO> listPage(int page) throws Exception;
+
+    public List<BoardVO> listCriteria(Criteria cri) throws Exception;
+
+    public int countPaging(Criteria cri) throws Exception;
 }
