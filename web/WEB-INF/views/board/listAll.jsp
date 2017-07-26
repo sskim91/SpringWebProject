@@ -13,7 +13,6 @@
 <!-- Main content -->
 <section class="content">
     <div class="row">
-        <!-- left column -->
         <div class="col-md-12">
             <!-- general form elements -->
 
@@ -50,8 +49,6 @@
                 <!-- /.box-footer-->
             </div>
         </div>
-        <!--/.col (left) -->
-
     </div>
     <!-- /.row -->
 </section>
