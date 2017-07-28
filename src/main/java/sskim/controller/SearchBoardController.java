@@ -28,7 +28,7 @@ public class SearchBoardController {
     public void listPage(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {
 
         logger.info(cri.toString());
-
+        logger.info("2개");
         model.addAttribute("list", service.listSearchCriteria(cri));
 
         PageMaker pageMaker = new PageMaker();
@@ -82,7 +82,7 @@ public class SearchBoardController {
         rttr.addFlashAttribute("msg", "SUCCESS");
         logger.info(rttr.toString());
 
-        return "redirect:/board/listPage";
+        return "redirect:/sboard/list";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.GET)

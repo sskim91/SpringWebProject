@@ -10,6 +10,7 @@
         <property name="username" value="sskim"/>
         <property name="password" value="rokmc1143"/>
     </bean>
+
     <!--Connection을 생성하고 처리하는 존재 SqlSessionFactoryBean을 통해서 객체를 생성-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
