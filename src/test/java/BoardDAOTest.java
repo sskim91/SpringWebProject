@@ -10,6 +10,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import sskim.dao.BoardDAO;
 import sskim.domain.BoardVO;
 import sskim.domain.Criteria;
+import sskim.domain.SearchCriteria;
 
 import java.util.List;
 
@@ -100,6 +101,24 @@ public class BoardDAOTest {
 
         logger.info("/board/read?bno=12&perPageNum=20");
         logger.info(uriComponents.toString());
+    }
 
+    @Test
+    public void testDynamic1() throws Exception {
+        SearchCriteria cri = new SearchCriteria();
+        cri.setPage(1);
+        cri.setKeyword("글");
+        cri.setSearchType("t");
+
+        logger.info("======================");
+
+        List<BoardVO> list = dao.listSearch(cri);
+
+        for (BoardVO board : list) {
+            logger.info(board.getBno() + ": " + board.getTitle());
+        }
+
+        logger.info("===================");
+        logger.info("count : " + dao.listSearchCount(cri));
     }
 }

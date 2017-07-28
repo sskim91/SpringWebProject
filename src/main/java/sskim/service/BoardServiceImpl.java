@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import sskim.dao.BoardDAO;
 import sskim.domain.BoardVO;
 import sskim.domain.Criteria;
+import sskim.domain.SearchCriteria;
 
 import java.util.List;
 
@@ -49,4 +50,13 @@ public class BoardServiceImpl implements BoardService{
         return dao.countPaging(cri);
     }
 
+    @Override
+    public List<BoardVO> listSearchCriteria(SearchCriteria cri) throws Exception {
+        return dao.listSearch(cri);
+    }
+
+    @Override
+    public int listSearchCount(SearchCriteria cri) throws Exception {
+        return dao.listSearchCount(cri);
+    }
 }

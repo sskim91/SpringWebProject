@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import sskim.domain.BoardVO;
 import sskim.domain.Criteria;
+import sskim.domain.SearchCriteria;
 
 import java.util.List;
 
@@ -58,5 +59,15 @@ public class BoardDAOImpl implements BoardDAO {
     @Override
     public int countPaging(Criteria cri) throws Exception {
         return session.selectOne(namespace + ".countPaging", cri);
+    }
+
+    @Override
+    public List<BoardVO> listSearch(SearchCriteria cri) throws Exception {
+        return session.selectList(namespace + ".listSearch", cri);
+    }
+
+    @Override
+    public int listSearchCount(SearchCriteria cri) throws Exception {
+        return session.selectOne(namespace + ".listSearchCount", cri);
     }
 }
