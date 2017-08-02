@@ -4,10 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import sskim.domain.Criteria;
+import sskim.domain.PageMaker;
 import sskim.domain.ReplyVO;
 import sskim.service.ReplyService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/replies")
@@ -61,7 +65,7 @@ public class ReplyController {
     }
 
     @RequestMapping(value = "/{rno}", method = RequestMethod.GET)
-    public ResponseEntity<String> remove(@PathVariable("rno")int rno) {
+    public ResponseEntity<String> remove(@PathVariable("rno") int rno) {
 
         ResponseEntity<String> entity = null;
         try {
@@ -70,6 +74,37 @@ public class ReplyController {
         } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+        return entity;
+    }
+
+    @RequestMapping(value = "/{bno}/{page}", method = RequestMethod.GET)
+    public ResponseEntity<Map<String, Object>> listPage(@PathVariable("bno") int bno,
+                                                        @PathVariable("page") int page) {
+
+        ResponseEntity<Map<String, Object>> entity = null;
+
+        try {
+            Criteria cri = new Criteria();
+            cri.setPage(page);
+
+            PageMaker pageMaker = new PageMaker();
+            pageMaker.setCri(cri);
+
+            Map<String, Object> map = new HashMap<>();
+            List<ReplyVO> list = service.listReplyPage(bno, cri);
+
+            map.put("list", list);
+
+            int replyCount = service.count(bno);
+            pageMaker.setTotalCount(replyCount);
+
+            map.put("pageMaker", pageMaker);
+
+            entity = new ResponseEntity<Map<String, Object>>(map, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            entity = new ResponseEntity<Map<String, Object>>(HttpStatus.BAD_REQUEST);
         }
         return entity;
     }

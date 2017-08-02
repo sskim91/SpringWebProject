@@ -18,12 +18,28 @@
     </insert>
 
     <update id="update">
-        UPDATE sskim_reply SET replytext = #{replytext}, updatedate = now()
+        UPDATE sskim_reply
+        SET replytext = #{replytext}, updatedate = now()
         WHERE rno = #{rno}
     </update>
 
     <delete id="delete">
-        DELETE FROM sskim_reply WHERE rno = #{rno}
+        DELETE FROM sskim_reply
+        WHERE rno = #{rno}
     </delete>
+
+    <select id="listPage" resultType="ReplyVO">
+        SELECT *
+        FROM sskim_reply
+        WHERE bno = #{bno}
+        ORDER BY rno DESC
+        LIMIT #{cri.pageStart}, #{cri.perPageNum}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT count(bno)
+        FROM sskim_reply
+        WHERE bno = #{bno}
+    </select>
 
 </mapper>
