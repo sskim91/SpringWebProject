@@ -64,7 +64,7 @@ public class ReplyController {
         return entity;
     }
 
-    @RequestMapping(value = "/{rno}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{rno}", method = RequestMethod.DELETE)
     public ResponseEntity<String> remove(@PathVariable("rno") int rno) {
 
         ResponseEntity<String> entity = null;
