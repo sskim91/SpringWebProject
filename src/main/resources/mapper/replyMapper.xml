@@ -14,7 +14,7 @@
 
     <insert id="create">
         INSERT INTO sskim_reply (bno, replytext, replyer)
-        VALUES (#{bno}, #{replytext}, #{replyer});
+        VALUES (#{bno}, #{replytext}, #{replyer})
     </insert>
 
     <update id="update">
