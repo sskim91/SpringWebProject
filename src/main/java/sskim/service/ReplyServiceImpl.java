@@ -2,6 +2,8 @@ package sskim.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import sskim.dao.BoardDAO;
 import sskim.dao.ReplyDAO;
 import sskim.domain.Criteria;
 import sskim.domain.ReplyVO;
@@ -12,36 +14,44 @@ import java.util.List;
 public class ReplyServiceImpl implements ReplyService{
 
     @Autowired
-    private ReplyDAO dao;
+    private ReplyDAO replyDAO;
 
+    @Autowired
+    private BoardDAO boardDAO;
+
+    @Transactional
     @Override
     public void addReply(ReplyVO vo) throws Exception {
-        dao.create(vo);
+        replyDAO.create(vo);
+        boardDAO.updateReplyCnt(vo.getBno(), 1);
     }
 
     @Override
     public List<ReplyVO> listReply(int bno) throws Exception {
-        return dao.list(bno);
+        return replyDAO.list(bno);
     }
 
     @Override
     public void modifyReply(ReplyVO vo) throws Exception {
-        dao.update(vo);
+        replyDAO.update(vo);
     }
 
+    @Transactional
     @Override
     public void removeReply(int rno) throws Exception {
-        dao.delete(rno);
+        int bno = replyDAO.getBno(rno);
+        replyDAO.delete(rno);
+        boardDAO.updateReplyCnt(bno, -1);
     }
 
     @Override
     public List<ReplyVO> listReplyPage(int bno, Criteria cri) throws Exception {
-        return dao.listPage(bno, cri);
+        return replyDAO.listPage(bno, cri);
     }
 
     @Override
     public int count(int bno) throws Exception {
-        return dao.count(bno);
+        return replyDAO.count(bno);
     }
 
 }

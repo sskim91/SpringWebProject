@@ -72,8 +72,10 @@
 
                         <!-- The time line -->
                         <ul class="timeline">
-                            <!-- timeline time label -->
-                            <li class="time-label" id="repliesDiv"><span class="bg-green">Replies List</span></li>
+                            <!-- timeline time label  댓글 수 볼 수 있게 처리-->
+                            <li class="time-label" id="repliesDiv">
+                                <span class="bg-green">Replies List <small id="replycntSmall"> [ ${boardVO.replycnt} ] </small></span>
+                            </li>
                         </ul>
 
                         <div class="text-center">
@@ -141,7 +143,7 @@
                         target.after(html);
                     }
 
-                    var bno = ${boardVO.bno};
+                    var bno = ${boardVO.bno};      //게시글 번호 가져옴
                     var replyPage = 1;
 
                     function getPage(pageInfo) {
@@ -150,6 +152,7 @@
                             printPaging(data.pageMaker, $(".pagination"));
 
                             $("#modifyModal").modal('hide');
+                            $("#replycntSmall").html("[ " + data.pageMaker.totalCount + " ]");
                         })
                     }
 

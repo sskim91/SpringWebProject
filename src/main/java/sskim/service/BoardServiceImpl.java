@@ -2,6 +2,8 @@ package sskim.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import sskim.dao.BoardDAO;
 import sskim.domain.BoardVO;
 import sskim.domain.Criteria;
@@ -20,8 +22,10 @@ public class BoardServiceImpl implements BoardService{
         dao.create(board);
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public BoardVO read(int bno) throws Exception {
+        dao.updateViewCnt(bno);
         return dao.read(bno);
     }
 

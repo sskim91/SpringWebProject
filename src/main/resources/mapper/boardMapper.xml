@@ -16,7 +16,8 @@
             content,
             writer,
             regdate,
-            viewcnt
+            viewcnt,
+            replycnt
         FROM sskim_board
         WHERE bno = #{bno}
     </select>
@@ -71,7 +72,8 @@
             content,
             writer,
             regdate,
-            viewcnt
+            viewcnt,
+            replycnt
         FROM sskim_board
         WHERE bno > 0
         ORDER BY bno DESC, regdate DESC
@@ -93,7 +95,7 @@
         FROM sskim_board
         WHERE bno > 0
         ]]>
-            <include refid="search"></include>
+        <include refid="search"></include>
         <![CDATA[
         ORDER BY bno DESC
         LIMIT #{pageStart}, #{perPageNum}
@@ -108,6 +110,18 @@
         ]]>
         <include refid="search"></include>
     </select>
+
+    <update id="updateReplyCnt">
+        UPDATE sskim_board
+        SET replycnt = replycnt + #{amount}
+        WHERE bno = #{bno}
+    </update>
+
+    <update id="updateViewCnt">
+        UPDATE sskim_board
+        SET viewcnt = viewcnt + 1
+        WHERE bno = #{bno}
+    </update>
 
     <sql id="search">
         <if test="searchType != null">

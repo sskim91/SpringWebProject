@@ -52,4 +52,9 @@ public class ReplyDAOImpl implements ReplyDAO {
     public int count(int bno) throws Exception {
         return session.selectOne(namespace + ".count", bno);
     }
+
+    @Override
+    public int getBno(int rno) throws Exception {
+        return session.selectOne(namespace + ".getBno", rno);
+    }
 }

@@ -2,6 +2,7 @@ package sskim.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sskim.dao.MessageDAO;
 import sskim.dao.PointDAO;
 import sskim.domain.MessageVO;
@@ -15,6 +16,7 @@ public class MessageServiceImpl implements MessageService {
     @Autowired
     private PointDAO pointDAO;
 
+    @Transactional
     @Override
     public void addMessage(MessageVO vo) throws Exception {
 

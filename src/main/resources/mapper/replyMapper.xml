@@ -42,4 +42,10 @@
         WHERE bno = #{bno}
     </select>
 
+    <select id="getBno" resultType="int">
+        SELECT bno
+        FROM sskim_reply
+        WHERE rno = #{rno}
+    </select>
+
 </mapper>

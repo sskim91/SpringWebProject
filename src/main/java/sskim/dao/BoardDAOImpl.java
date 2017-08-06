@@ -7,7 +7,9 @@ import sskim.domain.BoardVO;
 import sskim.domain.Criteria;
 import sskim.domain.SearchCriteria;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -69,5 +71,21 @@ public class BoardDAOImpl implements BoardDAO {
     @Override
     public int listSearchCount(SearchCriteria cri) throws Exception {
         return session.selectOne(namespace + ".listSearchCount", cri);
+    }
+
+    @Override
+    public void updateReplyCnt(int bno, int amount) throws Exception {
+
+        Map<String, Object> paramMap = new HashMap<>();
+
+        paramMap.put("bno", bno);
+        paramMap.put("amount", amount);
+
+        session.update(namespace + ".updateReplyCnt", paramMap);
+    }
+
+    @Override
+    public void updateViewCnt(int bno) throws Exception {
+        session.update(namespace + ".updateViewCnt", bno);
     }
 }
