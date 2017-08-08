@@ -52,9 +52,13 @@ public class UploadFileUtils {
 
         String yearPath = File.separator + cal.get(Calendar.YEAR);
 
+        logger.info("yearPath : "+yearPath);
+
         String monthPath = yearPath
                 + File.separator
                 + new DecimalFormat("00").format(cal.get(Calendar.MONTH) + 1);
+
+        logger.info("monthPath : "+monthPath);
 
         String datePath = monthPath
                 + File.separator
@@ -62,7 +66,7 @@ public class UploadFileUtils {
 
         makeDir(uploadPath, yearPath, monthPath, datePath);
 
-        logger.info(datePath);
+        logger.info("datePath : "+datePath);
 
         return datePath;
     }

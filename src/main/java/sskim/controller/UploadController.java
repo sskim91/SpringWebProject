@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import sskim.util.UploadFileUtils;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -64,6 +65,9 @@ public class UploadController {
         logger.info("size: " + file.getSize());
         logger.info("contentType: " + file.getContentType());
 
-        return new ResponseEntity<String>(file.getOriginalFilename(), HttpStatus.OK);
+        return new ResponseEntity<String>(
+                UploadFileUtils.uploadFile(uploadPath,
+                file.getOriginalFilename(),
+                file.getBytes()), HttpStatus.OK);
     }
 }
