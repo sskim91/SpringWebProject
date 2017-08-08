@@ -164,7 +164,6 @@
             var end = fileName.substr(14);
             console.log(front+end);
             return front+end;
-
         }
     </script>
 </body>

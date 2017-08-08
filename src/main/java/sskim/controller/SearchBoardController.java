@@ -5,15 +5,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sskim.domain.BoardVO;
 import sskim.domain.PageMaker;
 import sskim.domain.SearchCriteria;
 import sskim.service.BoardService;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/sboard/*")
@@ -108,5 +107,11 @@ public class SearchBoardController {
         rttr.addFlashAttribute("msg", "SUCCESS");
         //return "/board/success";
         return "redirect:/sboard/list";
+    }
+
+    @RequestMapping("/getAttach/{bno}")
+    @ResponseBody
+    public List<String> getAttach(@PathVariable("bno") int bno) throws Exception {
+        return service.getAttach(bno);
     }
 }

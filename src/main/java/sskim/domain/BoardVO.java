@@ -1,5 +1,6 @@
 package sskim.domain;
 
+import java.util.Arrays;
 import java.util.Date;
 
 public class BoardVO {
@@ -10,6 +11,8 @@ public class BoardVO {
     private Date regdate;
     private int viewcnt;
     private int replycnt;
+
+    private String[] files;
 
     public int getBno() {
         return bno;
@@ -67,6 +70,14 @@ public class BoardVO {
         this.replycnt = replycnt;
     }
 
+    public String[] getFiles() {
+        return files;
+    }
+
+    public void setFiles(String[] files) {
+        this.files = files;
+    }
+
     @Override
     public String toString() {
         return "BoardVO{" +
@@ -77,6 +88,7 @@ public class BoardVO {
                 ", regdate=" + regdate +
                 ", viewcnt=" + viewcnt +
                 ", replycnt=" + replycnt +
+                ", files=" + Arrays.toString(files) +
                 '}';
     }
 }
