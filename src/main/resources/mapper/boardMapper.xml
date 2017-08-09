@@ -134,6 +134,15 @@
         ORDER BY regdate
     </select>
 
+    <delete id="deleteAttach">
+        DELETE FROM sskim_attach
+        WHERE bno = #{bno}
+    </delete>
+
+    <insert id="replaceAttach">
+        INSERT INTO sskim_attach (fullname, bno) VALUES (#{fullName}, #{bno})
+    </insert>
+
     <sql id="search">
         <if test="searchType != null">
             <if test="searchType == 't'.toString()">

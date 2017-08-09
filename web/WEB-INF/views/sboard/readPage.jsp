@@ -9,6 +9,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/upload.js"></script>
 <style>
+    li{
+        list-style: none;
+    }
     .popup {
         position: absolute;
     }
@@ -71,6 +74,13 @@
                 </div>
                 <!-- /.box-body -->
 
+                <!-- 이미지 보여주기 위한 숨김 div -->
+                <div class='popup back' style="display: none"></div>
+                <div id="popup_front" class='popup front' style="display: none;">
+                    <img id="popup_img">
+
+                </div>
+
                 <div class="box-footer">
                     <div>
                         <hr>
@@ -83,12 +93,6 @@
                     <button type="submit" class="btn btn-primary" id="btn_list">LIST ALL</button>
                 </div>
 
-                <!-- 이미지 보여주기 위한 숨김 div -->
-                <div class='popup back' style="display: none"></div>
-                    <div id="popup_front" class='popup front' style="display: none;">
-                        <img id="popup_img">
-
-                </div>
 
                 <div class="row">
                     <div class="col-md-12">
@@ -325,10 +329,10 @@
                 <!-- Handlebars 템플릿 -->
                 <script id="templateAttach" type="text/x-handlebars-template">
                     <li data-src="{{fullName}}">
-                        <span class="mailbox-attachments-icon has-img">
+                        <span class="mailbox-attachment-icon has-img">
                             <img src="{{imgsrc}}" alt="Attachment">
                         </span>
-                        <div class="mailbox-attachments-info">
+                        <div class="mailbox-attachment-info">
                             <a href="{{getLink}}" class="mailbox-attachment-name">{{fileName}}</a>
                             </span>
                         </div>
@@ -350,6 +354,26 @@
                         });
 
                         $("#btn_remove").on("click", function () {
+
+                            //댓글 개수 구하기
+                            var replyCnt = $("#replycntSmall").html().replace(/[^0-9]/g, "");
+
+                            if(replyCnt > 0) {
+                                alert("댓글이 달린 게시물을 삭제할 수 없습니다.");
+                                return;
+                            }
+
+                            var arr = [];
+                            $(".uploadedList li").each(function (index) {
+                                arr.push($(this).attr("data-src"));
+                            });
+
+                            if(arr.length > 0) {
+                                $.post("/deleteAllFiles", {files: arr}, function () {
+
+                                });
+                            }
+
                             formObj.attr("action", "/sboard/removePage");
                             formObj.submit();
                         });
