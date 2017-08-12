@@ -41,4 +41,25 @@
         </mvc:interceptor>
     </mvc:interceptors>
 
+    <bean id="loginInterceptor" class="sskim.interceptor.LoginInterceptor"></bean>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/user/loginPost"/>
+            <ref bean="loginInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <bean id="authInterceptor" class="sskim.interceptor.AuthInterceptor"></bean>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/user/loginPost"/>
+            <ref bean="loginInterceptor"/>
+        </mvc:interceptor>
+
+        <mvc:interceptor>
+            <mvc:mapping path="/sboard/register"/>
+            <ref bean="authInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>
