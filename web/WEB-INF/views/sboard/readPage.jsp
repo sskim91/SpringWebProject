@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: kss
@@ -88,9 +89,13 @@
                     <ul class="mailbox-attachments clearfix uploadedList">
                         <!-- 업로드 된 파일 표시 -->
                     </ul>
-                    <button type="submit" class="btn btn-warning" id="btn_modify">Modify</button>
-                    <button type="submit" class="btn btn-danger" id="btn_remove">REMOVE</button>
-                    <button type="submit" class="btn btn-primary" id="btn_list">LIST ALL</button>
+
+                    <!-- 조회 페이지 조건 추가 로그인한 사용자는 수정 삭제 보일수 있게 로그인 안한 사용자는 리스트만 -->
+                    <c:if test="${login.uid == boardVO.writer}">
+                        <button type="submit" class="btn btn-warning" id="btn_modify">Modify</button>
+                        <button type="submit" class="btn btn-danger" id="btn_remove">REMOVE</button>
+                    </c:if>
+                        <button type="submit" class="btn btn-primary" id="btn_list">LIST ALL</button>
                 </div>
 
 
@@ -101,16 +106,27 @@
                             <div class="box-header">
                                 <h3 class="box-title">ADD NEW REPLY</h3>
                             </div>
-                            <div class="box-body">
-                                <label for="newReplyWriter">Writer</label>
-                                <input type="text" class="form-control" id="newReplyWriter">
-                                <label for="newReplyText">ReplyText</label>
-                                <input type="text" class="form-control" id="newReplyText">
-                            </div>
-                            <!-- /.box-body -->
-                            <div class="box-footer">
-                                <button type="submit" class="btn btn-primary" id="replyAddBtn">ADD REPLY</button>
-                            </div>
+                            <!-- 댓글의 추가 : 로그인한 사용자의 경우 댓글의 작성자는 로그인한 사용자의 아이디로 구성되어야 한다
+                                 댓글의 수정이나 삭제 : 댓글의 목록을 보는 것은 자유롭지만, 자신이 작성한 댓글에 대해서만 수정이나 삭제 작업이 가능하도록 수정해야한다.
+                            -->
+                            <c:if test="${not empty login}">
+                                <div class="box-body">
+                                    <label for="newReplyWriter">Writer</label>
+                                    <input type="text" class="form-control" id="newReplyWriter" value="${login.uid}" readonly>
+                                    <label for="newReplyText">ReplyText</label>
+                                    <input type="text" class="form-control" id="newReplyText">
+                                </div>
+                                <!-- /.box-body -->
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary" id="replyAddBtn">ADD REPLY</button>
+                                </div>
+                            </c:if>
+
+                            <c:if test="${empty login}">
+                                <div class="box-body">
+                                    <div><a href="javascript:goLogin();">Login Please</a></div>
+                                </div>
+                            </c:if>
                         </div>
 
                         <!-- The time line -->
@@ -162,7 +178,9 @@
                             <h3 class="timeline-header"><strong>{{rno}}</strong> -{{replyer}}</h3>
                             <div class="timeline-body">{{replytext}}</div>
                                 <div class="timeline-footer">
+                                    {{#eqReplyer replyer }}
                                     <a class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modifyModal">Modify</a>
+                                    {{/eqReplyer}}
                                 </div>
                         </div>
                     </li>
@@ -171,6 +189,15 @@
 
                 <!-- 댓글 -->
                 <script>
+                    <%----%>
+                    Handlebars.registerHelper("eqReplyer", function (replyer, block) {
+                        var accum = '';
+                        if(replyer == '${login.uid}') {
+                            accum += block.fn();
+                        }
+                        return accum;
+                    });
+
                     Handlebars.registerHelper("prettifyDate", function (timeValue) {
                         var dateObj = new Date(timeValue);
                         var year = dateObj.getFullYear();

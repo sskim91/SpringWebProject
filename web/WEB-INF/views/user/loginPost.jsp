@@ -12,7 +12,7 @@
 </head>
 <body>
 <script>
-    self.location = "/sboard/list";
+    self.location = "/";
 </script>
 </body>
 </html>

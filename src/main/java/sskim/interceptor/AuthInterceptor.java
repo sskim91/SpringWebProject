@@ -25,7 +25,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
             response.sendRedirect("/user/login");
             return false;
         }
-        return super.preHandle(request, response, handler);
+        return true;
     }
 
     private void saveDest(HttpServletRequest request) {
