@@ -31,4 +31,14 @@
         <constructor-arg value="/Users/sskim/upload"></constructor-arg>
     </bean>
 
+    <!--인터셉터 URI 설정-->
+    <bean id="sampleInterceptor" class="sskim.interceptor.SampleInterceptor"></bean>
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/doA"/>
+            <mvc:mapping path="/doB"/>
+            <ref bean="sampleInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
 </beans>

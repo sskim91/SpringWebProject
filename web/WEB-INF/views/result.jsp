@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-<span>Hello ${msg}</span>
+<span>Hello ${result}</span>
 </body>
 </html>
