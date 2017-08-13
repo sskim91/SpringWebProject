@@ -14,4 +14,16 @@
         WHERE uid = #{uid} AND upw = #{upw}
     </select>
 
+    <update id="keepLogin">
+        UPDATE sskim_user
+        SET sessionkey = #{sessionId}, sessionlimit = #{next}
+        WHERE uid = #{uid}
+    </update>
+
+    <select id="checkUserWithSessionKey" resultType="UserVO">
+        SELECT *
+        FROM sskim_user
+        WHERE sessionkey = #{value} AND sessionlimit > now()
+    </select>
+
 </mapper>
